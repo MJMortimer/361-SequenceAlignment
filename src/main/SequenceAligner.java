@@ -2,17 +2,39 @@ package main;
 
 public class SequenceAligner {
 
+	private String x;
+	private String y;
+
 	private int gCost = -2;
 	private int mCost = 1;
 	private int bCost = -1;
 	private Case[][] matchings;
+
+	private int totalPen;
+	private String res1;
+	public int getTotalPen() {
+		return totalPen;
+	}
+
+
+	public String getRes1() {
+		return res1;
+	}
+
+
+	public String getRes2() {
+		return res2;
+	}
+
+
+	private String res2;
 
 	public int alpha(char x,char y){
 		return x == y ? mCost : bCost;
 	}
 
 
-	public void alignment(String x, String y){
+	public void align(){
 
 		matchings = initializeMatchingArray(x, y);
 
@@ -28,7 +50,7 @@ public class SequenceAligner {
 			}
 		}
 
-		System.out.println(matchings[x.length()][y.length()].getP());
+		this.totalPen = matchings[x.length()][y.length()].getP();
 
 		gatherAlignment(x, y);
 
@@ -62,15 +84,17 @@ public class SequenceAligner {
 		while(i!=0){
 			strx.append(x.charAt(i-1));
 			stry.append("_");
+			i--;
 		}
 
 		while(j!=0){
-			strx.append(y.charAt(j-1));                                                                          
+			strx.append(y.charAt(j-1));
 			stry.append("_");
+			j--;
 		}
 
-		System.out.println(strx.reverse());
-		System.out.println(stry.reverse());
+		this.res1 = strx.reverse().toString();
+		this.res2 = stry.reverse().toString();
 
 
 	}
@@ -92,7 +116,17 @@ public class SequenceAligner {
 
 	public static void main(String[] args){
 		SequenceAligner sa = new SequenceAligner();
-		sa.alignment("GATCGGCAT", "CAATGTGAATC");
+		sa.setStrings("THISISASTRINGGOINGFORWARDSLEL", "LELSDRAWROFGNIOGGNIRTSASISIHT");
+		sa.align();
+		System.out.println(sa.res1);
+		System.out.println(sa.res2);
+		System.out.println(sa.totalPen);
 
+	}
+
+
+	public void setStrings(String string1, String string2) {
+		this.x = string1;
+		this.y = string2;
 	}
 }
