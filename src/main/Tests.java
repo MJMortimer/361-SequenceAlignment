@@ -29,6 +29,22 @@ public class Tests {
 	}
 
 	@Test
+	public void test_that_broke_greedy() {
+		String string1 = "AB";
+		String string2 = "BA";
+
+		String result1 = "AB";
+		String result2 = "BA";
+		int resultingPen = -2;
+
+		Given_the_strings(string1, string2);
+		After_aligning();
+
+		The_resulting_strings_are_as_expected(result1, result2);
+		The_resulting_cost_is_as_expected(resultingPen);
+	}
+
+	@Test
 	public void equalStrings(){
 		String string1 = "AAAAAAAAAAAAAAAAAAAA";
 		String string2 = "AAAAAAAAAAAAAAAAAAAA";
