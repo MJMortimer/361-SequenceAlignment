@@ -1,5 +1,7 @@
 package main;
 
+import javax.management.RuntimeErrorException;
+
 public class SequenceAligner {
 
 	private String x;
@@ -43,14 +45,14 @@ public class SequenceAligner {
 				char a = x.charAt(j-1);
 				char b = y.charAt(i-1);
 				Case optimal = Case.max(Case.max(
-						new Case(1, alpha(a,b) + matchings[j-1][i-1].getP()),
-						new Case(2, gCost + matchings[j-1][i].getP())),
-						new Case(3, gCost + matchings[j][i-1].getP()));
+						new Case(1, alpha(a,b) + matchings[j-1][i-1].getR()),
+						new Case(2, gCost + matchings[j-1][i].getR())),
+						new Case(3, gCost + matchings[j][i-1].getR()));
 				matchings[j][i] = optimal;
 			}
 		}
 
-		this.totalPen = matchings[x.length()][y.length()].getP();
+		this.totalPen = matchings[x.length()][y.length()].getR();
 
 		gatherAlignment(x, y);
 
@@ -116,7 +118,10 @@ public class SequenceAligner {
 
 	public static void main(String[] args){
 		SequenceAligner sa = new SequenceAligner();
-		sa.setStrings("THISISASTRINGGOINGFORWARDSLEL", "LELSDRAWROFGNIOGGNIRTSASISIHT");
+		if(args.length != 2){
+			throw new RuntimeException("Two strings must be provided");
+		}
+		sa.setStrings(args[0], args[1]);
 		sa.align();
 		System.out.println(sa.res1);
 		System.out.println(sa.res2);

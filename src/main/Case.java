@@ -8,18 +8,18 @@ public class Case {
 		return c;
 	}
 
-	public int getP() {
-		return p;
+	public int getR() {
+		return r;
 	}
 
-	private int p;
+	private int r;
 
 	public Case(int c, int p){
 		this.c = c;
-		this.p = p;
+		this.r = p;
 	}
 
 	public static Case max(Case c1, Case c2){
-		return c1.p > c2.p ? c1 : c2;
+		return c1.r >= c2.r ? c1 : c2;
 	}
 }
